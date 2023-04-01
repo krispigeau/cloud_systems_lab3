@@ -24,5 +24,11 @@ variable "web_chassis" {
   default     = "t2.micro"
 }
 
+variable "web_key_name" {
+  description = "public key to use for webservers"
+  type        = string
+  default     = "kris_desktop"
+}
+
 
 

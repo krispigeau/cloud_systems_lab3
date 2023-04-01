@@ -31,7 +31,7 @@ module "ec2_public" {
   name                   = "${var.vpc_a_name}-public"
   vpc_security_group_ids = [module.lab3_sg.security_group_id] #Output from module lab3_sg
   subnet_id              = module.vpc_1.public_subnets[0]     #Output from module vpc_1
-  key_name               = "kris_desktop"
+  key_name               = var.web_key_name
   user_data              = var.web_bootstrap
 }
 
@@ -43,7 +43,7 @@ module "ec2_private" {
   instance_type          = var.web_chassis
   name                   = "${var.vpc_a_name}-private"
   vpc_security_group_ids = [module.lab3_sg.security_group_id] #Output from module lab3_sg
-  subnet_id              = module.vpc_1.private_subnets[0]     #Output from module vpc_1
-  key_name               = "kris_desktop"
+  subnet_id              = module.vpc_1.private_subnets[0]    #Output from module vpc_1
+  key_name               = var.web_key_name
   user_data              = var.web_bootstrap
 }
