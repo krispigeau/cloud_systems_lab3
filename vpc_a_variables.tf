@@ -1,4 +1,4 @@
-# Input variable definitions
+# Variables for VPC_A
 
 variable "vpc_a_name" {
   description = "Name of VPC"

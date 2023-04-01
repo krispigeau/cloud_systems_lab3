@@ -26,17 +26,24 @@ module "ec2_public" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "4.3.0"
 
-  ami                    = "ami-00c39f71452c08778"
-  instance_type          = "t2.micro"
+  ami                    = var.web_ami
+  instance_type          = var.web_chassis
   name                   = "${var.vpc_a_name}-public"
   vpc_security_group_ids = [module.lab3_sg.security_group_id] #Output from module lab3_sg
   subnet_id              = module.vpc_1.public_subnets[0]     #Output from module vpc_1
   key_name               = "kris_desktop"
-  user_data              = <<-EOF
-    #!/bin/bash
-    yum update -y
-    yum install httpd -y
-    systemctl restart httpd
-    systemctl enable httpd
-    EOF
+  user_data              = var.web_bootstrap
+}
+
+module "ec2_private" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "4.3.0"
+
+  ami                    = var.web_ami
+  instance_type          = var.web_chassis
+  name                   = "${var.vpc_a_name}-private"
+  vpc_security_group_ids = [module.lab3_sg.security_group_id] #Output from module lab3_sg
+  subnet_id              = module.vpc_1.private_subnets[0]     #Output from module vpc_1
+  key_name               = "kris_desktop"
+  user_data              = var.web_bootstrap
 }
