@@ -32,4 +32,11 @@ module "ec2_public" {
   vpc_security_group_ids = [module.lab3_sg.security_group_id] #Output from module lab3_sg
   subnet_id              = module.vpc_1.public_subnets[0]     #Output from module vpc_1
   key_name               = "kris_desktop"
+  user_data              = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install httpd -y
+    systemctl restart httpd
+    systemctl enable httpd
+    EOF
 }
